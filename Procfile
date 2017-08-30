@@ -1,1 +1,1 @@
-worker: java -jar target/tsrs_bot-1.0-SNAPSHOT.jar Main
+worker: sh target/Main
