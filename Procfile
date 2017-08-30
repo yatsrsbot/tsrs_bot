@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* HelloWorld
+worker: java -jar target/tsrs_bot-1.0-SNAPSHOT.jar Main
