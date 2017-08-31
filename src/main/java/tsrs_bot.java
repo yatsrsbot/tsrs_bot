@@ -50,7 +50,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
         Map<String, Integer> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("Select servicename,order from auction_data");
+            ResultSet rs = stmt.executeQuery("Select servicename,order_value from auction_data");
             while (rs.next()) {
                 String service = rs.getString("servicename");
                 Integer order = rs.getInt("order");
