@@ -53,7 +53,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
             ResultSet rs = stmt.executeQuery("Select servicename,order_value from auction_data");
             while (rs.next()) {
                 String service = rs.getString("servicename");
-                Integer order = rs.getInt("order");
+                Integer order = rs.getInt("order_value");
                 resultSet.put(service, order);
             }
         } catch (SQLException e) {
