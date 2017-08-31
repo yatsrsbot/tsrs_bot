@@ -13,7 +13,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
-                    .setText(message_text);
+                    .setText("ня");
             try {
                 sendMessage(message); // Sending our message object to user
             } catch (TelegramApiException e) {
