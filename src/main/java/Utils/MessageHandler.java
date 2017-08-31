@@ -12,7 +12,7 @@ public class MessageHandler {
     }
 
     public void Handle(String message, long chatId) {
-        if (message.equals("/start@tsrs_bot")) {
+        if (message.equals("/start")) {
             sendTextMessage("HELLo",chatId);
         }
         String responseMessage = AuctionUtil.getAuctionRecordsFromDatabase().get(message).toString();
