@@ -24,13 +24,20 @@ public class AuctionUtil {
     }
 
     public static void updateAuctionRecordsFromDatabase(String auctionName, Integer value) {
-        Map<String, Integer> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("update auction_data set order_value = " + value + " where servicename = '" + auctionName + "'");
+            stmt.executeQuery("update auction_data set order_value = " + value + " where servicename = '" + auctionName + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void deleteAuctionRecordFromDataBase(String auctionName) {
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            stmt.executeQuery("delete from auction_data where servicename = '" + auctionName + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

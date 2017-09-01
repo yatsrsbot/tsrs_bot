@@ -26,8 +26,9 @@ public class MessageHandler {
 
 
     public void Handle(Message message, Long chatId) {
-        sendCurrentState(chatId);
+
         if (message.getText().equalsIgnoreCase(CommandList.start)) {
+            Commands.StartCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
         } else if (message.getText().equalsIgnoreCase(CommandList.auction)) {
             Commands.AuctionCommand.execute(chatId);
@@ -62,29 +63,26 @@ public class MessageHandler {
             Commands.UpdateAuctionCommand.execute(chatId, message.getText());
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
             Commands.AuctionCommand.execute(chatId);
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.delete)) && (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION))) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_DELETE);
+            Sender.getInstance().sendTextMessage("please insert Auction Name", chatId);
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.view)) && (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION_DELETE))) {
+            Commands.DeleteAuctionCommand.execute(chatId, message.getText());
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
+            Commands.AuctionCommand.execute(chatId);
         }
-
-
     }
 
-    private void sendCurrentState(Long chatId) {
-        String message;
-        switch (ChatStateHolder.getInstance().getChatState(chatId)) {
-            case AUCTION:
-                message = "\"Auction \\n list of commands\\n /view \\n /add \\n /update \\n /delete \\n /exit \\n pay attention:add/update/delete/exit not working for now :( sorry\\\"\"";
-                break;
-            case DEFAULT:
-                message = "\"Oh, Hi there!\\nYou can work with auction records by sending /auction command\"";
-                break;
-            case AUCTION_UPDATE:
-                message = "\"please insert Auction Name and value, just like this Auction:Value\"";
-                break;
-            case AUCTION_VIEW:
-                message = "\"please insert Auction Name\"";
-                break;
-            default:
-                message = "state unknown";
-        }
-        Sender.getInstance().sendTextMessage(message, chatId);
-    }
+
 }
+
