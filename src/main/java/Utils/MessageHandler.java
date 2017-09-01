@@ -61,8 +61,6 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_UPDATE)) {
             Commands.UpdateAuctionCommand.execute(chatId, message.getText());
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-            Commands.AuctionCommand.execute(chatId);
         } else if ((message
                 .getText()
                 .equalsIgnoreCase(CommandList.delete)) && (ChatStateHolder
@@ -78,8 +76,6 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_DELETE))) {
             Commands.DeleteAuctionCommand.execute(chatId, message.getText());
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-            Commands.AuctionCommand.execute(chatId);
         }
     }
 

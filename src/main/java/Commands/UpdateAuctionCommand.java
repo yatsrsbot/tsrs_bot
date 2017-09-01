@@ -19,9 +19,9 @@ public class UpdateAuctionCommand {
                     Sender.getInstance().sendTextMessage("there are no such record", chatId);
                 } else {
                     AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);
-                    Sender.getInstance().sendTextMessage("auction updated", chatId);
+                    Sender.getInstance().sendTextMessage("auction updated, you can enter another value", chatId);
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 Sender.getInstance().sendTextMessage("wrong format, try again :)", chatId);
             }
 
