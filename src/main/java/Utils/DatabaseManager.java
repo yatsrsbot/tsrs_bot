@@ -1,13 +1,15 @@
 package Utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.SQLException;
 
-public class DatabaseManager {
+class DatabaseManager {
     private static Connection connection;
 
-    public static Connection getConnection() {
+    private DatabaseManager(){}
+
+    static Connection getConnection() {
         if (connection == null) {
             try {
                 String dbUrl = System.getenv("JDBC_DATABASE_URL");

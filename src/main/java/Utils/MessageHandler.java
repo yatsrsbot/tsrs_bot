@@ -1,32 +1,50 @@
 package Utils;
 
-import org.telegram.telegrambots.api.methods.send.SendMessage;
+
+import Commands.CommandList;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.bots.AbsSender;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
+
 
 public class MessageHandler {
+
+    private Sender sender;
     private AbsSender bot;
+    private static MessageHandler instance;
 
-    public MessageHandler(AbsSender bot) {
-        this.bot = bot;
+    private MessageHandler() {
     }
 
-    public void Handle(String message, long chatId) {
-        if (message.equals("/start")) {
-            sendTextMessage("HELLo",chatId);
-        }
-        String responseMessage = AuctionUtil.getAuctionRecordsFromDatabase().get(message).toString();
-        sendTextMessage(responseMessage, chatId);
+    private MessageHandler(AbsSender bot) {
     }
 
-    private void sendTextMessage(String text, long chatId) {
-        SendMessage message = new SendMessage() // Create a message object object
-                .setChatId(chatId)
-                .setText(text);
-        try {
-            bot.sendMessage(message); // Sending our message object to user
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+    public static MessageHandler getInstance(AbsSender bot) {
+        if (instance == null) {
+            instance = new MessageHandler(bot);
         }
+        Sender.getInstance().setBot(bot);
+        return instance;
+    }
+
+
+    public void Handle(Message message, Long chatId) {
+        if (message.getText().equalsIgnoreCase(CommandList.start)) {
+            Commands.StartCommand.execute(chatId);
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+        } else if (message.getText().equalsIgnoreCase(CommandList.auction)) {
+            Commands.AuctionCommand.execute(chatId);
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.view)) &&
+                (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStates.AUCTION))) {
+            Commands.ViewAuctionCommand.execute(chatId, message.getText());
+        }
+
+
+
     }
 }

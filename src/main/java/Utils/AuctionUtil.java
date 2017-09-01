@@ -6,8 +6,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-class AuctionUtil {
-    static Map<String, Integer> getAuctionRecordsFromDatabase() {
+public class AuctionUtil {
+    public static Map<String, Integer> getAuctionRecordsFromDatabase() {
         Map<String, Integer> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
