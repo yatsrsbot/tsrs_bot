@@ -1,4 +1,6 @@
+import Utils.AuctionUtil;
 import Utils.MessageHandler;
+import Utils.Sender;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -19,6 +21,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             long chatId = update.getMessage().getChatId();
             MessageHandler.getInstance(this).Handle(message, chatId);
+            Sender.getInstance().sendTextMessage(AuctionUtil.getAuctionRecordsFromDatabase().get("Афиша").toString(),chatId);
         }
     }
 
