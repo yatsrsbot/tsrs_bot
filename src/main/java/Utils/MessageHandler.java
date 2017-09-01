@@ -45,6 +45,7 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_VIEW)) {
             Commands.ViewAuctionCommand.execute(chatId, message.getText());
+            ChatStateHolder.getInstance().setChatState(chatId,ChatStates.DEFAULT);
         } else if ((message
                 .getText()
                 .equalsIgnoreCase(CommandList.update)) && (ChatStateHolder
@@ -58,6 +59,7 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_UPDATE)) {
             Commands.UpdateAuctionCommand.execute(chatId, message.getText());
+            ChatStateHolder.getInstance().setChatState(chatId,ChatStates.DEFAULT);
         }
 
 
