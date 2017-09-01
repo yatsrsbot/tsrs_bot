@@ -34,9 +34,12 @@ public class MessageHandler {
         } else if (message.getText().equalsIgnoreCase(CommandList.auction)) {
             Commands.AuctionCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-        } else if (message
+        } else if ((message
                 .getText()
-                .equalsIgnoreCase(CommandList.view)) {
+                .equalsIgnoreCase(CommandList.view)) && (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION))) {
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_VIEW);
             Sender.getInstance().sendTextMessage("please insert Auction Name",chatId);
         } else if (ChatStateHolder
