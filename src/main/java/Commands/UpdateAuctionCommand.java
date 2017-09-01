@@ -14,16 +14,17 @@ public class UpdateAuctionCommand {
                 String[] data = auctionNameAndValue.split(":");
                 auctionName = data[0];
                 value = Integer.parseInt(data[1]);
-            } catch (Exception e) {
+                String auctionRecordName = AuctionUtil.getAuctionRecordsFromDatabase().get(auctionName).toString();
+                if ("".equals(auctionRecordName)) {
+                    Sender.getInstance().sendTextMessage("there are no such record", chatId);
+                } else {
+                    AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);
+                    Sender.getInstance().sendTextMessage("auction updated", chatId);
+                }
+            } catch (NumberFormatException e) {
                 Sender.getInstance().sendTextMessage("wrong format, try again :)", chatId);
             }
-            String auctionRecordName = AuctionUtil.getAuctionRecordsFromDatabase().get(auctionName).toString();
-            if ("".equals(auctionRecordName)) {
-                Sender.getInstance().sendTextMessage("there are no such record", chatId);
-            } else {
-                AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);
-                Sender.getInstance().sendTextMessage("auction updated", chatId);
-            }
+
         }
     }
 }
