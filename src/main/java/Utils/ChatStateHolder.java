@@ -10,7 +10,7 @@ public class ChatStateHolder {
     private ChatStateHolder() {
     }
 
-    static ChatStateHolder getInstance() {
+    public static ChatStateHolder getInstance() {
         if (instance == null){
             instance = new ChatStateHolder();
         }

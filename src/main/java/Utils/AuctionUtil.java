@@ -22,4 +22,15 @@ public class AuctionUtil {
         }
         return resultSet;
     }
+
+    public static void UpdateAuctionRecordsFromDatabase(String auctionName, Integer value) {
+        Map<String, Integer> resultSet = new HashMap<>();
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("update auction_data set order_value = " + value + " where servicename = '" + auctionName + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

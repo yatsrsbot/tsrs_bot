@@ -8,8 +8,6 @@ import org.telegram.telegrambots.bots.AbsSender;
 
 public class MessageHandler {
 
-    private Sender sender;
-    private AbsSender bot;
     private static MessageHandler instance;
 
     private MessageHandler() {
@@ -41,12 +39,25 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION))) {
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_VIEW);
-            Sender.getInstance().sendTextMessage("please insert Auction Name",chatId);
+            Sender.getInstance().sendTextMessage("please insert Auction Name", chatId);
         } else if (ChatStateHolder
                 .getInstance()
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_VIEW)) {
             Commands.ViewAuctionCommand.execute(chatId, message.getText());
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.update)) && (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION))) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
+            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this \"Auction\":\"Value\"", chatId);
+        } else if (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION_UPDATE)) {
+            Commands.UpdateAuctionCommand.execute(chatId, message.getText());
         }
 
 
