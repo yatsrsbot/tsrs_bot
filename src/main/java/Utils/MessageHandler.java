@@ -52,7 +52,7 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION))) {
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
-            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this \"Auction\":\"Value\"", chatId);
+            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this Auction:Value", chatId);
         } else if (ChatStateHolder
                 .getInstance()
                 .getChatState(chatId)
