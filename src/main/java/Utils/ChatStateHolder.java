@@ -21,7 +21,7 @@ public class ChatStateHolder {
     }
     public void setChatState(Long chatId,ChatStates state){
         chatStates.put(chatId,state);
-        Sender.getInstance().sendTextMessage(chatStates.get(chatId).toString(),chatId);
+
     }
 
 

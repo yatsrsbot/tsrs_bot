@@ -21,7 +21,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             long chatId = update.getMessage().getChatId();
             MessageHandler.getInstance(this).Handle(message, chatId);
-            Sender.getInstance().sendTextMessage(AuctionUtil.getAuctionRecordsFromDatabase().get("Афиша").toString(),chatId);
+
         }
     }
 
