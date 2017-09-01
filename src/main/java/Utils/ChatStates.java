@@ -5,6 +5,6 @@ public enum ChatStates {
     DEFAULT_REGISTERED,
     AUCTION,
     AUCTION_UPDATE,
-    AUCTION_SELECT,
+    AUCTION_VIEW,
     AUCTION_DELETE,
 }

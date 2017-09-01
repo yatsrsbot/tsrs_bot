@@ -34,16 +34,16 @@ public class MessageHandler {
         } else if (message.getText().equalsIgnoreCase(CommandList.auction)) {
             Commands.AuctionCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-        } else if ((message
+        } else if (message
                 .getText()
-                .equalsIgnoreCase(CommandList.view)) &&
-                (ChatStateHolder
-                        .getInstance()
-                        .getChatState(chatId)
-                        .equals(ChatStates.AUCTION))) {
+                .equalsIgnoreCase(CommandList.view)) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_VIEW);
+        } else if (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION_VIEW)) {
             Commands.ViewAuctionCommand.execute(chatId, message.getText());
         }
-
 
 
     }
