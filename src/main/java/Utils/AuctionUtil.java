@@ -23,7 +23,7 @@ public class AuctionUtil {
         return resultSet;
     }
 
-    public static void UpdateAuctionRecordsFromDatabase(String auctionName, Integer value) {
+    public static void updateAuctionRecordsFromDatabase(String auctionName, Integer value) {
         Map<String, Integer> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
