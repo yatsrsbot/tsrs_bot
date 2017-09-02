@@ -72,9 +72,7 @@ public class MessageHandler {
                 .equals(ChatStates.AUCTION))) {
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_DELETE);
             Sender.getInstance().sendTextMessage("please insert Auction Name", chatId);
-        } else if ((message
-                .getText()
-                .equalsIgnoreCase(CommandList.view)) && (ChatStateHolder
+        } else if ((ChatStateHolder
                 .getInstance()
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_DELETE))) {

@@ -1,8 +1,6 @@
 package Commands;
 
 import Utils.AuctionUtil;
-import Utils.ChatStateHolder;
-import Utils.ChatStates;
 import Utils.Sender;
 
 public class UpdateAuctionCommand {
