@@ -12,7 +12,7 @@ public class AddAuctionCommand {
             String[] data = auctionNameAndValue.split("/");
             auctionName = data[0];
             value = Integer.parseInt(data[1]);
-            if (!AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
+            if (AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
                 Sender.getInstance().sendTextMessage("this record exists already, try uodate instead", chatId);
             } else {
                 AuctionUtil.insertAuctionRecordsIntoDatabase(auctionName, value);
