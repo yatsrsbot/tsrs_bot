@@ -14,8 +14,7 @@ public class UpdateAuctionCommand {
                 String[] data = auctionNameAndValue.split(":");
                 auctionName = data[0];
                 value = Integer.parseInt(data[1]);
-                String auctionRecordName = AuctionUtil.getAuctionRecordsFromDatabase().get(auctionName).toString();
-                if ("".equals(auctionRecordName)) {
+                if (!AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
                     Sender.getInstance().sendTextMessage("there are no such record", chatId);
                 } else {
                     AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);

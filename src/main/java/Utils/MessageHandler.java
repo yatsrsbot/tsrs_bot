@@ -46,8 +46,6 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_VIEW)) {
             Commands.ViewAuctionCommand.execute(chatId, message.getText());
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-            Commands.AuctionCommand.execute(chatId);
         } else if ((message
                 .getText()
                 .equalsIgnoreCase(CommandList.update)) && (ChatStateHolder
