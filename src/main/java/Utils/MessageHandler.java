@@ -53,7 +53,7 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION))) {
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
-            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this Auction:Value", chatId);
+            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this Auction/Value", chatId);
         } else if (ChatStateHolder
                 .getInstance()
                 .getChatState(chatId)
@@ -74,9 +74,22 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_DELETE))) {
             Commands.DeleteAuctionCommand.execute(chatId, message.getText());
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.add)) && (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION))) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_ADD);
+            Sender.getInstance().sendTextMessage("please insert Auction Name and value, just like this Auction/Value", chatId);
+        } else if (ChatStateHolder
+                .getInstance()
+                .getChatState(chatId)
+                .equals(ChatStates.AUCTION_ADD)) {
+            Commands.AddAuctionCommand.execute(chatId, message.getText());
         }
+
+
     }
-
-
 }
 

@@ -7,4 +7,5 @@ public enum ChatStates {
     AUCTION_UPDATE,
     AUCTION_VIEW,
     AUCTION_DELETE,
+    AUCTION_ADD,
 }

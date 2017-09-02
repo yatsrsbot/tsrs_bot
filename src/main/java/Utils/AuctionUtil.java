@@ -40,4 +40,13 @@ public class AuctionUtil {
             e.printStackTrace();
         }
     }
+
+    public static void insertAuctionRecordsIntoDatabase(String auctionName, Integer value) {
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            stmt.executeQuery("INSERT INTO Auction_data (Servicename,order_value) Values ('" + auctionName + "', " + value + ")");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

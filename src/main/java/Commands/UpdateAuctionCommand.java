@@ -7,11 +7,11 @@ import Utils.Sender;
 
 public class UpdateAuctionCommand {
     public static void execute(Long chatId, String auctionNameAndValue) {
-        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStates.AUCTION_UPDATE)) {
+
             String auctionName = null;
             Integer value = null;
             try {
-                String[] data = auctionNameAndValue.split(":");
+                String[] data = auctionNameAndValue.split("/");
                 auctionName = data[0];
                 value = Integer.parseInt(data[1]);
                 if (!AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
@@ -26,5 +26,5 @@ public class UpdateAuctionCommand {
 
         }
     }
-}
+
 
