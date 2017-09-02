@@ -30,6 +30,11 @@ public class MessageHandler {
         if (message.getText().equalsIgnoreCase(CommandList.start)) {
             Commands.StartCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.exit))) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+            Commands.ExitCommand.execute(chatId);
         } else if (message.getText().equalsIgnoreCase(CommandList.auction)) {
             Commands.AuctionCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
@@ -87,14 +92,7 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_ADD)) {
             Commands.AddAuctionCommand.execute(chatId, message.getText());
-        } else if ((message
-                .getText()
-                .equalsIgnoreCase(CommandList.exit))) {
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
-            Commands.ExitCommand.execute(chatId);
         }
-
-
     }
 }
 
