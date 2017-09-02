@@ -8,5 +8,5 @@ public class CommandList {
     public static final String update = commandInitChar + "update";
     public static final String delete = commandInitChar + "delete";
     public static final String add = commandInitChar + "add";
-
+    public static final String exit = commandInitChar + "exit";
 }

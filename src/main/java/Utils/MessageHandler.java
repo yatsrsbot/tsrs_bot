@@ -87,6 +87,11 @@ public class MessageHandler {
                 .getChatState(chatId)
                 .equals(ChatStates.AUCTION_ADD)) {
             Commands.AddAuctionCommand.execute(chatId, message.getText());
+        } else if ((message
+                .getText()
+                .equalsIgnoreCase(CommandList.exit))) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+            Commands.ExitCommand.execute(chatId);
         }
 
 

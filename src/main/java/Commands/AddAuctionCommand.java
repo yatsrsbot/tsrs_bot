@@ -13,7 +13,7 @@ public class AddAuctionCommand {
             auctionName = data[0];
             value = Integer.parseInt(data[1]);
             if (AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
-                Sender.getInstance().sendTextMessage("this record exists already, try uodate instead", chatId);
+                Sender.getInstance().sendTextMessage("this record exists already, try update instead", chatId);
             } else {
                 AuctionUtil.insertAuctionRecordsIntoDatabase(auctionName, value);
                 Sender.getInstance().sendTextMessage("auction added, you can enter another value", chatId);
