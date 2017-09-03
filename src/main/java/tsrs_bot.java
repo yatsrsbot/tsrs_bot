@@ -1,7 +1,4 @@
-import Utils.AuctionUtil;
 import Utils.MessageHandler;
-import Utils.Sender;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
@@ -16,12 +13,10 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
+
             // Set variables
 
-            MessageHandler.getInstance(this).Handle(update);
-
-        }
+            MessageHandler.getInstance(this).handle(update);
     }
 
 

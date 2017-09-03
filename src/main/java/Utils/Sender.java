@@ -2,6 +2,7 @@ package Utils;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -35,7 +36,7 @@ public class Sender {
             e.printStackTrace();
         }
     }
-    public void sendMessageWithKeyboard(String text, Long chatId, InlineKeyboardMarkup keyboardMarkup) {
+    public void sendMessageWithKeyboard(String text, Long chatId, ReplyKeyboardMarkup keyboardMarkup) {
         SendMessage message = new SendMessage() // Create a message object object
                 .setChatId(chatId)
                 .setText(text);
