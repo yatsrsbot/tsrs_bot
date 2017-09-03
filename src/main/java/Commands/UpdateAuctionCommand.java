@@ -16,10 +16,10 @@ public class UpdateAuctionCommand {
                     Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
                 } else {
                     AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);
-                    Sender.getInstance().sendTextMessage("auction updated, you can enter another value", chatId);
+                    Sender.getInstance().sendTextMessage("Запись изменена", chatId);
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                Sender.getInstance().sendTextMessage("wrong format, try again :)", chatId);
+                Sender.getInstance().sendTextMessage("Неверный формат", chatId);
             }
 
         }

@@ -32,30 +32,7 @@ public class MessageHandler {
             Message message = update.getMessage();
             long chatId = message.getChatId();
             String messageText = message.getText();
-            if (messageText.equals(CommandList.start)) {
-                Commands.StartCommand.execute(chatId);
-                ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
-            } else if (ChatStateHolder
-                    .getInstance()
-                    .getChatState(chatId)
-                    .equals(ChatStates.AUCTION_VIEW)) {
-                Commands.ViewAuctionCommand.execute(chatId, messageText);
-            } else if (ChatStateHolder
-                    .getInstance()
-                    .getChatState(chatId)
-                    .equals(ChatStates.AUCTION_UPDATE)) {
-                Commands.UpdateAuctionCommand.execute(chatId, messageText);
-            } else if ((ChatStateHolder
-                    .getInstance()
-                    .getChatState(chatId)
-                    .equals(ChatStates.AUCTION_DELETE))) {
-                Commands.DeleteAuctionCommand.execute(chatId, messageText);
-            } else if (ChatStateHolder
-                    .getInstance()
-                    .getChatState(chatId)
-                    .equals(ChatStates.AUCTION_ADD)) {
-                Commands.AddAuctionCommand.execute(chatId, messageText);
-            } else if (CommonsUtil.isCommand(messageText)) {
+            if (CommonsUtil.isCommand(messageText)) {
                 if (CommonsUtil.getCommand(messageText)
                         .equals(CommandList.exit)) {
                     ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
@@ -96,6 +73,29 @@ public class MessageHandler {
                     Sender
                             .getInstance()
                             .sendMessageWithKeyboard("Введите название аукциона м значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+                } else if (messageText.equals(CommandList.start)) {
+                    Commands.StartCommand.execute(chatId);
+                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+                } else if (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStates.AUCTION_VIEW)) {
+                    Commands.ViewAuctionCommand.execute(chatId, messageText);
+                } else if (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStates.AUCTION_UPDATE)) {
+                    Commands.UpdateAuctionCommand.execute(chatId, messageText);
+                } else if ((ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStates.AUCTION_DELETE))) {
+                    Commands.DeleteAuctionCommand.execute(chatId, messageText);
+                } else if (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStates.AUCTION_ADD)) {
+                    Commands.AddAuctionCommand.execute(chatId, messageText);
                 }
             }
         }

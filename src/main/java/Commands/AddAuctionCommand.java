@@ -14,13 +14,13 @@ public class AddAuctionCommand {
             auctionName = CommonsUtil.capitalize(data[0].toLowerCase());
             value = Integer.parseInt(data[1]);
             if (AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
-                Sender.getInstance().sendTextMessage("this record exists already, try update instead", chatId);
+                Sender.getInstance().sendTextMessage("Эта запись существует, попробуйте команду \"Изменить\"", chatId);
             } else {
                 AuctionUtil.insertAuctionRecordsIntoDatabase(auctionName, value);
-                Sender.getInstance().sendTextMessage("auction added, you can enter another value", chatId);
+                Sender.getInstance().sendTextMessage("Запись добавлена", chatId);
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            Sender.getInstance().sendTextMessage("wrong format, try again :)", chatId);
+            Sender.getInstance().sendTextMessage("Неверный формат", chatId);
         }
     }
 }
