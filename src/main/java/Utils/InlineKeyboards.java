@@ -9,7 +9,6 @@ import java.util.List;
 public class InlineKeyboards {
     public static ReplyKeyboardMarkup getDefaultKeyboard() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
         replyKeyboardMarkup.setSelective(false);
         replyKeyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyobardRows = new ArrayList<>();
@@ -23,7 +22,6 @@ public class InlineKeyboards {
 
     public static ReplyKeyboardMarkup getAcutionKeyboard() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
         replyKeyboardMarkup.setSelective(false);
         replyKeyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyobardRows = new ArrayList<>();
@@ -41,7 +39,6 @@ public class InlineKeyboards {
     }
     public static ReplyKeyboardMarkup getExitKeyboard() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
         replyKeyboardMarkup.setSelective(false);
         replyKeyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyobardRows = new ArrayList<>();
