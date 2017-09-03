@@ -42,6 +42,7 @@ public class AuctionUtil {
     }
 
     public static void insertAuctionRecordsIntoDatabase(String auctionName, Integer value) {
+            auctionName = CommonsUtil.capitalize(auctionName); //capitalize
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
             stmt.executeQuery("INSERT INTO Auction_data (Servicename,order_value) Values ('" + auctionName + "', " + value + ")");
