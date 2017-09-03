@@ -55,7 +55,7 @@ public class MessageHandler {
                     ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
                     Sender
                             .getInstance()
-                            .sendMessageWithKeyboard("Введите название аукциона м значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+                            .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
                 } else if (CommonsUtil
                         .getCommand(messageText)
                         .equals(CommandList.delete) && (ChatStateHolder
@@ -72,12 +72,13 @@ public class MessageHandler {
                     ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_ADD);
                     Sender
                             .getInstance()
-                            .sendMessageWithKeyboard("Введите название аукциона м значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+                            .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
                 }
-            } else if (messageText.equals(CommandList.start)) {
-                Commands.StartCommand.execute(chatId);
-                ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
-            } else if (ChatStateHolder
+                else if (messageText.equals(CommandList.start)) {
+                    Commands.StartCommand.execute(chatId);
+                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+                }
+            }  else if (ChatStateHolder
                     .getInstance()
                     .getChatState(chatId)
                     .equals(ChatStates.AUCTION_VIEW)) {
