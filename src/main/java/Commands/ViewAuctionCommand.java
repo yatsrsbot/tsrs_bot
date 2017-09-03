@@ -9,7 +9,7 @@ public class ViewAuctionCommand {
             String responseMessage = AuctionUtil.getAuctionRecordsFromDatabase().get(auctionName).toString();
             Sender.getInstance().sendTextMessage(responseMessage, chatId);
         } else {
-            Sender.getInstance().sendTextMessage("there are no such record, try again", chatId);
+            Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
         }
     }
 }

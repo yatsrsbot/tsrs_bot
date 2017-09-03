@@ -28,8 +28,7 @@ public class CommonsUtil {
         localizedCommands.put("Показать", "/view");
         localizedCommands.put("Изменить", "/update");
         localizedCommands.put("Удалить", "/delete");
-        localizedCommands.put("/put", "/put");
-        localizedCommands.put("/add", "/add");
+        localizedCommands.put("Добавить", "/add");
         localizedCommands.put("Выход", "/exit");
     }
 
