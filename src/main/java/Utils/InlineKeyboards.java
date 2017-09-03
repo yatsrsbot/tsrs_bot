@@ -17,7 +17,7 @@ public class InlineKeyboards {
         // Add it to the message
         markupInline.setKeyboard(rowsInline);
         return markupInline;
-//                message.setReplyMarkup(markupInline);
+
     }
 
 }

@@ -39,6 +39,7 @@ public class Sender {
         SendMessage message = new SendMessage() // Create a message object object
                 .setChatId(chatId)
                 .setText(text);
+        message.setReplyMarkup(keyboardMarkup);
         try {
             bot.sendMessage(message); // Sending our message object to user
         } catch (TelegramApiException e) {
