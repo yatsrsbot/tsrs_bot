@@ -11,7 +11,7 @@ public class AddAuctionCommand {
         Integer value = null;
         try {
             String[] data = auctionNameAndValue.split("/");
-            auctionName = CommonsUtil.capitalize(data[0]);
+            auctionName = CommonsUtil.capitalize(data[0].toLowerCase());
             value = Integer.parseInt(data[1]);
             if (AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
                 Sender.getInstance().sendTextMessage("this record exists already, try update instead", chatId);
