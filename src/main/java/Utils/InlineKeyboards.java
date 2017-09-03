@@ -39,5 +39,17 @@ public class InlineKeyboards {
         replyKeyboardMarkup.setKeyboard(keyobardRows);
         return replyKeyboardMarkup;
     }
+    public static ReplyKeyboardMarkup getExitKeyboard() {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        replyKeyboardMarkup.setSelective(false);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        List<KeyboardRow> keyobardRows = new ArrayList<>();
+        KeyboardRow firstRow = new KeyboardRow();
+        firstRow.add("Выход");
+        keyobardRows.add(firstRow);
+        replyKeyboardMarkup.setKeyboard(keyobardRows);
+        return replyKeyboardMarkup;
+    }
 
 }
