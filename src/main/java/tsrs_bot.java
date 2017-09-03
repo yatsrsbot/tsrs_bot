@@ -18,9 +18,8 @@ public class tsrs_bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
-            Message message = update.getMessage();
-            long chatId = update.getMessage().getChatId();
-            MessageHandler.getInstance(this).Handle(message, chatId);
+
+            MessageHandler.getInstance(this).Handle(update);
 
         }
     }

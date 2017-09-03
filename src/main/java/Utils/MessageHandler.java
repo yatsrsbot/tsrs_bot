@@ -3,6 +3,7 @@ package Utils;
 
 import Commands.CommandList;
 import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.AbsSender;
 
 
@@ -25,9 +26,10 @@ public class MessageHandler {
     }
 
 
-    public void Handle(Message message, Long chatId) {
-
-        if (message.getText().equalsIgnoreCase(CommandList.start)) {
+    public void Handle(Update update) {
+        Message message = update.getMessage();
+        long chatId = update.getMessage().getChatId();
+        if (update.getCallbackQuery().getData().equalsIgnoreCase(CommandList.start)) {
             Commands.StartCommand.execute(chatId);
             ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
         } else if ((message
