@@ -4,10 +4,10 @@ package Commands;
 import Utils.InlineKeyboards;
 import Utils.Sender;
 
-public class StartCommand {
+public class StartCommand implements ICommand {
 
-
-    public static void execute(Long chatId) {
+    @Override
+    public void execute(Long chatId, String... strings) {
         Sender
                 .getInstance()
                 .sendMessageWithKeyboard("Привет!",chatId, InlineKeyboards.getDefaultKeyboard());

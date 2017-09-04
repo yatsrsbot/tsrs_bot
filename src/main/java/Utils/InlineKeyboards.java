@@ -8,44 +8,51 @@ import java.util.List;
 
 public class InlineKeyboards {
     public static ReplyKeyboardMarkup getDefaultKeyboard() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        List<KeyboardRow> keyobardRows = new ArrayList<>();
+
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow firstRow = new KeyboardRow();
         firstRow.add("Работа с данными аукциона");
-        keyobardRows.add(firstRow);
-        replyKeyboardMarkup.setKeyboard(keyobardRows);
-        return replyKeyboardMarkup;
+        keyboardRows.add(firstRow);
+
+        return createKeyboard(keyboardRows);
 
     }
 
     public static ReplyKeyboardMarkup getAcutionKeyboard() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        List<KeyboardRow> keyobardRows = new ArrayList<>();
+
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+
         KeyboardRow firstRow = new KeyboardRow();
         firstRow.add("Показать");
         firstRow.add("Добавить");
+
         KeyboardRow secondRow = new KeyboardRow();
         secondRow.add("Изменить");
         secondRow.add("Удалить");
         secondRow.add("Выход");
-        keyobardRows.add(firstRow);
-        keyobardRows.add(secondRow);
-        replyKeyboardMarkup.setKeyboard(keyobardRows);
-        return replyKeyboardMarkup;
+
+        keyboardRows.add(firstRow);
+        keyboardRows.add(secondRow);
+
+        return createKeyboard(keyboardRows);
     }
     public static ReplyKeyboardMarkup getExitKeyboard() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        List<KeyboardRow> keyobardRows = new ArrayList<>();
+
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow firstRow = new KeyboardRow();
         firstRow.add("Выход");
-        keyobardRows.add(firstRow);
-        replyKeyboardMarkup.setKeyboard(keyobardRows);
+        keyboardRows.add(firstRow);
+
+        return createKeyboard(keyboardRows);
+    }
+
+    private static ReplyKeyboardMarkup createKeyboard(List<KeyboardRow> keyboardRows) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+
+        replyKeyboardMarkup.setSelective(false);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+
         return replyKeyboardMarkup;
     }
 

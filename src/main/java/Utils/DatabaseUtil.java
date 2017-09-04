@@ -28,7 +28,7 @@ public class DatabaseUtil {
     public static void updateAuctionRecordsFromDatabase(String auctionName, Integer value) {
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            stmt.executeQuery("update auction_data set order_value = " + value + " where servicename = '" + auctionName + "'");
+            stmt.executeUpdate("update auction_data set order_value = " + value + " where servicename = '" + auctionName + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class DatabaseUtil {
     public static void deleteAuctionRecordFromDataBase(String auctionName) {
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            stmt.executeQuery("delete from auction_data where servicename = '" + auctionName + "'");
+            stmt.executeUpdate("delete from auction_data where servicename = '" + auctionName + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class DatabaseUtil {
     public static void insertAuctionRecordsIntoDatabase(String auctionName, Integer value) {
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            stmt.executeQuery("INSERT INTO Auction_data (Servicename,order_value) Values ('" + auctionName + "', " + value + ")");
+            stmt.executeUpdate("INSERT INTO Auction_data (Servicename,order_value) Values ('" + auctionName + "', " + value + ")");
         } catch (SQLException e) {
             e.printStackTrace();
         }
