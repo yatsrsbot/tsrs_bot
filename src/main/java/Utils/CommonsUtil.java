@@ -21,18 +21,6 @@ public class CommonsUtil {
         return String.valueOf(chars);
     }
 
-    private static final Map<String, String> localizedCommands;
-
-    static {
-        localizedCommands = new HashMap<>();
-        localizedCommands.put("/start", "/start");
-        localizedCommands.put("Работа с данными аукциона", "/auction");
-        localizedCommands.put("Показать", "/view");
-        localizedCommands.put("Изменить", "/update");
-        localizedCommands.put("Удалить", "/delete");
-        localizedCommands.put("Добавить", "/add");
-        localizedCommands.put("Выход", "/exit");
-    }
 
     public static Command getCommand(String label) {
         Command command = null;
