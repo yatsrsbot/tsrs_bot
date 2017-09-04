@@ -7,7 +7,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
 
     private MessageHandler messageHandler;
-    private String botToken = "";
+    private String botToken = "449828975:AAFFC60Q31Z2Ip5wWyuLZwrMhW5SY7EwoBs";
     public tsrs_bot(){
         UserHolder.getInstance();
     }
