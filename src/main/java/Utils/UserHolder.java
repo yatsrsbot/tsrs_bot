@@ -22,7 +22,7 @@ public class UserHolder {
     }
 
     public Role getUserRole(Integer userId) {
-        return users.get(userId);
+        return users.getOrDefault(userId, Role.NONE);
     }
 
 

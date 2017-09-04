@@ -1,3 +1,4 @@
+import Utils.Sender;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -12,11 +13,11 @@ public class Main {
 
         // Register our bot
         try {
-            botsApi.registerBot(new tsrs_bot());
+            tsrs_bot bot = new tsrs_bot();
+            botsApi.registerBot(bot);
+            Sender.getInstance().setBot(bot);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 }
-
-

@@ -58,7 +58,7 @@ public class DatabaseUtil {
             ResultSet rs = stmt.executeQuery("Select userid,available_role from users");
             while (rs.next()) {
                 Integer userid = rs.getInt("userid");
-                Role available_role = Role.valueOf(rs.getString("available_role"));
+                Role available_role = Role.valueOf(rs.getString("available_role").toUpperCase());
                 resultSet.put(userid, available_role);
             }
         } catch (SQLException e) {

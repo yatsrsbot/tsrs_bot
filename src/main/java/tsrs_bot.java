@@ -7,7 +7,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
 
     private MessageHandler messageHandler;
-    private String botToken = "449828975:AAFFC60Q31Z2Ip5wWyuLZwrMhW5SY7EwoBs";
+    private String botToken = "";
     public tsrs_bot(){
         UserHolder.getInstance();
     }
@@ -18,7 +18,7 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
             // Set variables
 
-            MessageHandler.getInstance(this).handle(update);
+        MessageHandler.getInstance().handle(update);
     }
 
 
