@@ -34,6 +34,8 @@ public class MessageHandler {
             Message message = update.getMessage();
             Integer userId = message.getFrom().getId();
             long chatId = message.getChatId();
+            UserHolder userHolder = UserHolder.getInstance();
+            Sender.getInstance().sendTextMessage(userHolder.getUserRole(userId).toString(),chatId);
             Role userRole = UserHolder.getInstance().getUserRole(userId);
             Sender.getInstance().sendTextMessage(userRole.toString(),chatId);
             String messageText = message.getText();
