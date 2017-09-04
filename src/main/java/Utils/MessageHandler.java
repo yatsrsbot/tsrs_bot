@@ -2,6 +2,8 @@ package Utils;
 
 
 import Commands.CommandList;
+import Enums.ChatStates;
+import Enums.Command;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.AbsSender;
@@ -33,52 +35,66 @@ public class MessageHandler {
             long chatId = message.getChatId();
             String messageText = message.getText();
             if (CommonsUtil.isCommand(messageText)) {
-                if (CommonsUtil.getCommand(messageText)
-                        .equals(CommandList.exit)) {
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
-                    Commands.ExitCommand.execute(chatId);
-                } else if (CommonsUtil.getCommand(messageText).equals(CommandList.auction)) {
-                    Commands.AuctionCommand.execute(chatId);
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
-                } else if (CommonsUtil.getCommand(messageText)
-                        .equals(CommandList.view) && (ChatStateHolder
-                        .getInstance()
-                        .getChatState(chatId)
-                        .equals(ChatStates.AUCTION))) {
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_VIEW);
-                    Sender.getInstance().sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
-                } else if (CommonsUtil.getCommand(messageText)
-                        .equals(CommandList.update) && (ChatStateHolder
-                        .getInstance()
-                        .getChatState(chatId)
-                        .equals(ChatStates.AUCTION))) {
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
-                    Sender
-                            .getInstance()
-                            .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
-                } else if (CommonsUtil
-                        .getCommand(messageText)
-                        .equals(CommandList.delete) && (ChatStateHolder
-                        .getInstance()
-                        .getChatState(chatId)
-                        .equals(ChatStates.AUCTION))) {
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_DELETE);
-                    Sender.getInstance().sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
-                } else if (CommonsUtil.getCommand(messageText)
-                        .equals(CommandList.add) && (ChatStateHolder
-                        .getInstance()
-                        .getChatState(chatId)
-                        .equals(ChatStates.AUCTION))) {
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_ADD);
-                    Sender
-                            .getInstance()
-                            .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+                Command command = CommonsUtil.getCommand(messageText);
+                switch (command) {
+                    case EXIT:
+                        ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+                        Commands.ExitCommand.execute(chatId);
+                        break;
+                    case AUCTION:
+                        Commands.AuctionCommand.execute(chatId);
+                        ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION);
+                        break;
+                    case AUCTION_VIEW:
+                        if (ChatStateHolder
+                                .getInstance()
+                                .getChatState(chatId)
+                                .equals(ChatStates.AUCTION)) {
+                            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_VIEW);
+                            Sender.getInstance().sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
+                        }
+                        break;
+                    case AUCTION_EDIT:
+                        if (ChatStateHolder
+                                .getInstance()
+                                .getChatState(chatId)
+                                .equals(ChatStates.AUCTION)) {
+                            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
+                            Sender
+                                    .getInstance()
+                                    .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+
+                        }
+                        break;
+                    case AUCTION_DELETE:
+                        if (ChatStateHolder
+                                .getInstance()
+                                .getChatState(chatId)
+                                .equals(ChatStates.AUCTION)) {
+                            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_DELETE);
+                            Sender.getInstance().sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
+
+                        }
+                        break;
+                    case AUCTION_ADD:
+                        if (ChatStateHolder
+                                .getInstance()
+                                .getChatState(chatId)
+                                .equals(ChatStates.AUCTION)) {
+                            Sender
+                                    .getInstance()
+                                    .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
+
+                        }
+                        break;
+                    case START:
+                        Commands.StartCommand.execute(chatId);
+                        ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
+                        break;
+
+
                 }
-                else if (messageText.equals(CommandList.start)) {
-                    Commands.StartCommand.execute(chatId);
-                    ChatStateHolder.getInstance().setChatState(chatId, ChatStates.DEFAULT);
-                }
-            }  else if (ChatStateHolder
+            } else if (ChatStateHolder
                     .getInstance()
                     .getChatState(chatId)
                     .equals(ChatStates.AUCTION_VIEW)) {

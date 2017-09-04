@@ -1,5 +1,7 @@
 package Utils;
 
+import Enums.ChatStates;
+
 import java.util.HashMap;
 import java.util.Map;
 

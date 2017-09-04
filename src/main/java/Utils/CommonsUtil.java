@@ -1,5 +1,7 @@
 package Utils;
 
+import Enums.Command;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +34,22 @@ public class CommonsUtil {
         localizedCommands.put("Выход", "/exit");
     }
 
-    public static String getCommand(String label) {
-        return localizedCommands.get(label);
+    public static Command getCommand(String label) {
+        Command command = null;
+        for (Command x: Command.values()){
+            if (x.getName().equals(label)){
+                command = x;
+            }
+        }
+        return command;
     }
     public static boolean isCommand(String label){
-        return localizedCommands.containsKey(label);
+        for (Command x: Command.values()){
+            if (x.getName().equals(label)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
