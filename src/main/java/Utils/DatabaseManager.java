@@ -20,9 +20,10 @@ class DatabaseManager {
 //                props.setProperty("user","postgres");
 //                props.setProperty("password","root");
                 String dbUrl = System.getenv("JDBC_DATABASE_URL");
-                connection = DriverManager.getConnection(dbUrl,props);
+//                connection = DriverManager.getConnection(dbUrl,props);
+                connection = DriverManager.getConnection(dbUrl);
 
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
