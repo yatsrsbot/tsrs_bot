@@ -34,8 +34,8 @@ public class MessageHandler {
             Message message = update.getMessage();
             Integer userId = message.getFrom().getId();
             long chatId = message.getChatId();
-            Sender.getInstance().sendTextMessage(userId.toString(),chatId);
             Role userRole = UserHolder.getInstance().getUserRole(userId);
+            Sender.getInstance().sendTextMessage(userRole.toString(),chatId);
             String messageText = message.getText();
             if (CommonsUtil.isCommand(messageText)) {
                 Command command = CommonsUtil.getCommand(messageText);
