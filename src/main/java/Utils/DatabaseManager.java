@@ -15,13 +15,13 @@ class DatabaseManager {
         if (connection == null) {
             try {
 
-                String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
-                Properties props = new Properties();
-                props.setProperty("user","postgres");
-                props.setProperty("password","root");
-//                String dbUrl = System.getenv("JDBC_DATABASE_URL");
-                connection = DriverManager.getConnection(dbUrl,props);
-//                connection = DriverManager.getConnection(dbUrl);
+//                String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
+//                Properties props = new Properties();
+//                props.setProperty("user","postgres");
+//                props.setProperty("password","root");
+                String dbUrl = System.getenv("JDBC_DATABASE_URL");
+//                connection = DriverManager.getConnection(dbUrl,props);
+                connection = DriverManager.getConnection(dbUrl);
 
             } catch (SQLException e) {
                 e.printStackTrace();
