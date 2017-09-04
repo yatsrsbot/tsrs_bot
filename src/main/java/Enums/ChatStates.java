@@ -2,7 +2,7 @@ package Enums;
 
 public enum ChatStates {
     DEFAULT,
-    DEFAULT_REGISTERED,
+    DEFAULT_UNREGISTERED,
     AUCTION,
     AUCTION_UPDATE,
     AUCTION_VIEW,

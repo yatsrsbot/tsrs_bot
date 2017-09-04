@@ -1,6 +1,6 @@
 package Commands;
 
-import Utils.AuctionUtil;
+import Utils.DatabaseUtil;
 import Utils.Sender;
 
 public class UpdateAuctionCommand {
@@ -12,10 +12,10 @@ public class UpdateAuctionCommand {
                 String[] data = auctionNameAndValue.split("/");
                 auctionName = data[0];
                 value = Integer.parseInt(data[1]);
-                if (!AuctionUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
+                if (!DatabaseUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
                     Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
                 } else {
-                    AuctionUtil.updateAuctionRecordsFromDatabase(auctionName, value);
+                    DatabaseUtil.updateAuctionRecordsFromDatabase(auctionName, value);
                     Sender.getInstance().sendTextMessage("Запись изменена", chatId);
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {

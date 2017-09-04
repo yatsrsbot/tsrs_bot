@@ -1,9 +1,9 @@
 package Utils;
 
 
-import Commands.CommandList;
 import Enums.ChatStates;
 import Enums.Command;
+import Enums.Role;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.AbsSender;
@@ -32,7 +32,10 @@ public class MessageHandler {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
             Message message = update.getMessage();
+            Integer userId = message.getFrom().getId();
             long chatId = message.getChatId();
+            Sender.getInstance().sendTextMessage(userId.toString(),chatId);
+            Role userRole = UserHolder.getInstance().getUserRole(userId);
             String messageText = message.getText();
             if (CommonsUtil.isCommand(messageText)) {
                 Command command = CommonsUtil.getCommand(messageText);

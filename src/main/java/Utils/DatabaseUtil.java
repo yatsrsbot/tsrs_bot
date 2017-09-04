@@ -1,12 +1,14 @@
 package Utils;
 
+import Enums.Role;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AuctionUtil {
+public class DatabaseUtil {
     public static Map<String, Integer> getAuctionRecordsFromDatabase() {
         Map<String, Integer> resultSet = new HashMap<>();
         try {
@@ -48,5 +50,21 @@ public class AuctionUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static Map<Integer, Role> reloadUserRolesFromDatabase(){
+        Map<Integer, Role> resultSet = new HashMap<>();
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("Select userid,available_role from users");
+            while (rs.next()) {
+                Integer userid = rs.getInt("userid");
+                Role available_role = Role.valueOf(rs.getString("available_role"));
+                resultSet.put(userid, available_role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+
     }
 }

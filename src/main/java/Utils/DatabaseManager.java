@@ -9,13 +9,15 @@ class DatabaseManager {
 
     private DatabaseManager(){}
 
-    static Connection getConnection() {
+        static Connection getConnection() {
+
         if (connection == null) {
             try {
+                Class.forName("org.postgresql.Driver");
                 String dbUrl = System.getenv("JDBC_DATABASE_URL");
                 connection = DriverManager.getConnection(dbUrl);
 
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
