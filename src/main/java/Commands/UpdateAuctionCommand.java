@@ -1,6 +1,7 @@
 package Commands;
 
-import Enums.ChatStates;
+import Enums.ChatStateEnum;
+import Enums.Role;
 import Utils.ChatStateHolder;
 import Utils.DatabaseUtil;
 import Utils.InlineKeyboards;
@@ -8,13 +9,13 @@ import Utils.Sender;
 
 public class UpdateAuctionCommand implements ICommand {
     @Override
-    public void execute(Long chatId, String... strings) {
-        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStates.AUCTION)) {
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_UPDATE);
+    public void execute(Long chatId, Role role, Integer userId, String... strings) {
+        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.AUCTION_UPDATE,userId);
             Sender
                     .getInstance()
                     .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
-        } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStates.AUCTION_UPDATE)) {
+        } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION_UPDATE)) {
             String auctionName;
             Integer value;
             try {

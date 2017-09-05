@@ -1,6 +1,6 @@
 package Enums;
 
-public enum ChatStates {
+public enum ChatStateEnum {
     DEFAULT,
     DEFAULT_UNREGISTERED,
     AUCTION,

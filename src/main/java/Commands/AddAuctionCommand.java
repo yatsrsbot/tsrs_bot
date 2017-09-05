@@ -1,18 +1,20 @@
 package Commands;
 
-import Enums.ChatStates;
+import Enums.ChatStateEnum;
+import Enums.Role;
 import Utils.*;
 
 public class AddAuctionCommand implements ICommand {
 
     @Override
-    public void execute(Long chatId, String... strings) {
-        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStates.AUCTION)) {
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStates.AUCTION_ADD);
+    public void execute(Long chatId, Role role, Integer userId, String... strings) {
+        ChatStateEnum chatState = ChatStateHolder.getInstance().getChatState(chatId);
+        if (chatState.equals(ChatStateEnum.AUCTION)) {
+            ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.AUCTION_ADD, userId);
             Sender
                     .getInstance()
                     .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
-        } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStates.AUCTION_ADD)){
+        } else if (chatState.equals(ChatStateEnum.AUCTION_ADD)) {
             String auctionName;
             Integer value;
             try {

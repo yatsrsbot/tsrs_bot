@@ -2,71 +2,66 @@ package Utils;
 
 
 import Commands.*;
-import Enums.ChatStates;
-import Enums.CommandEnum;
+import Enums.ChatStateEnum;
 import Enums.Role;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.bots.AbsSender;
 
 
 public class MessageHandler {
 
-    private static MessageHandler instance;
-
-    private MessageHandler() {
-    }
-
-    private MessageHandler(AbsSender bot) {
+    private static class MessageHandlerHolder {
+        private static final MessageHandler HOLDER_INSTANCE = new MessageHandler();
     }
 
     public static MessageHandler getInstance() {
-        if (instance == null) {
-            instance = new MessageHandler();
-        }
-        return instance;
+        return MessageHandlerHolder.HOLDER_INSTANCE;
     }
-
 
     public void handle(Update update) {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
+
             Message message = update.getMessage();
             Integer userId = message.getFrom().getId();
             long chatId = message.getChatId();
+
             Role userRole = UserHolder.getInstance().getUserRole(userId);
+            String messageText = message.getText();
+
             if (userRole == Role.NONE) {
-                Sender.getInstance().sendTextMessage("У вас нет доступа", chatId);
-            } else {
-                String messageText = message.getText();
                 if (CommonsUtil.isCommand(messageText)) {
                     ICommand command = CommonsUtil.getCommand(messageText);
-                    command.execute(chatId);
-
+                    command.execute(chatId, userRole, userId);
+                }
+            } else {
+                if (CommonsUtil.isCommand(messageText)) {
+                    ICommand command = CommonsUtil.getCommand(messageText);
+                    command.execute(chatId, userRole, userId);
                 } else if (ChatStateHolder
                         .getInstance()
                         .getChatState(chatId)
-                        .equals(ChatStates.AUCTION_VIEW)) {
+                        .equals(ChatStateEnum.AUCTION_VIEW)) {
                     ViewAuctionCommand viewAuctionCommand = new ViewAuctionCommand();
-                    viewAuctionCommand.execute(chatId, messageText);
+                    viewAuctionCommand.execute(chatId, userRole, userId, messageText);
                 } else if (ChatStateHolder
                         .getInstance()
                         .getChatState(chatId)
-                        .equals(ChatStates.AUCTION_UPDATE)) {
+                        .equals(ChatStateEnum.AUCTION_UPDATE)) {
                     UpdateAuctionCommand updateAuctionCommand = new UpdateAuctionCommand();
-                    updateAuctionCommand.execute(chatId, messageText);
+                    updateAuctionCommand.execute(chatId, userRole, userId, messageText);
                 } else if ((ChatStateHolder
                         .getInstance()
                         .getChatState(chatId)
-                        .equals(ChatStates.AUCTION_DELETE))) {
+                        .equals(ChatStateEnum.AUCTION_DELETE))) {
                     DeleteAuctionCommand deleteAuctionCommand = new DeleteAuctionCommand();
-                    deleteAuctionCommand.execute(chatId, messageText);
+                    deleteAuctionCommand.execute(chatId, userRole, userId, messageText);
                 } else if (ChatStateHolder
                         .getInstance()
                         .getChatState(chatId)
-                        .equals(ChatStates.AUCTION_ADD)) {
+                        .equals(ChatStateEnum.AUCTION_ADD)) {
                     AddAuctionCommand addAuctionCommand = new AddAuctionCommand();
-                    addAuctionCommand.execute(chatId, messageText);
+                    addAuctionCommand.execute(chatId, userRole, userId, messageText);
                 }
 
             }

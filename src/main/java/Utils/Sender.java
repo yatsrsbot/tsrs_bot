@@ -8,18 +8,14 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 public class Sender {
     private AbsSender bot;
 
-    private static Sender instance;
-
-
-    private Sender() {
+    private static class SenderHolder {
+        private static final Sender HOLDER_INSTANCE = new Sender();
     }
 
     public static Sender getInstance() {
-        if (instance == null) {
-            instance = new Sender();
-        }
-        return instance;
+        return SenderHolder.HOLDER_INSTANCE;
     }
+
     public void setBot(AbsSender bot){
         this.bot = bot;
     }

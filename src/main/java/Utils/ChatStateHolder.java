@@ -1,29 +1,47 @@
 package Utils;
 
-import Enums.ChatStates;
+import Enums.ChatStateEnum;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChatStateHolder {
-    private Map<Long, ChatStates> chatStates = new HashMap<>();
+    private Map<Long, UserState> chatStates = new HashMap<>();
     private static ChatStateHolder instance;
 
     private ChatStateHolder() {
     }
 
+    private class UserState {
+        Integer userId;
+        ChatStateEnum chatState;
+
+        private UserState(Integer userId, ChatStateEnum chatState) {
+            this.userId = userId;
+            this.chatState = chatState;
+        }
+
+
+
+    }
+
     public static ChatStateHolder getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new ChatStateHolder();
         }
         return instance;
     }
-    public ChatStates getChatState(long chatId){
-        return chatStates.get(chatId);
-    }
-    public void setChatState(Long chatId,ChatStates state){
-        chatStates.put(chatId,state);
 
+    public ChatStateEnum getChatState(long chatId) {
+        return chatStates.get(chatId).chatState;
+    }
+
+    public void setChatState(Long chatId, ChatStateEnum state, Integer userId) {
+        chatStates.put(chatId, new UserState(userId,state));
+
+    }
+    public Integer getUserId(Long chatId){
+        return chatStates.get(chatId).userId;
     }
 
 
