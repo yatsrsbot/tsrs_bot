@@ -5,6 +5,7 @@ import Enums.Role;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public class DatabaseUtil {
         Map<String, Integer> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("Select servicename,order_value from auction_data");
+            ResultSet rs = stmt.executeQuery("SELECT servicename,order_value FROM auction_data");
             while (rs.next()) {
                 String service = rs.getString("servicename");
                 Integer order = rs.getInt("order_value");
@@ -51,20 +52,63 @@ public class DatabaseUtil {
             e.printStackTrace();
         }
     }
-    public static Map<Integer, Role> reloadUserRolesFromDatabase(){
-        Map<Integer, Role> resultSet = new HashMap<>();
+
+    public static Map<Integer, UserHolder.UserData> reloadUserRolesFromDatabase() {
+        Map<Integer, UserHolder.UserData> resultSet = new HashMap<>();
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("Select userid,available_role from users");
+            ResultSet rs = stmt.executeQuery("SELECT userid,available_role,username FROM users");
             while (rs.next()) {
                 Integer userid = rs.getInt("userid");
                 Role available_role = Role.valueOf(rs.getString("available_role").toUpperCase());
-                resultSet.put(userid, available_role);
+                String userName = rs.getString("userid");
+                resultSet.put(userid, new UserHolder.UserData(available_role, userName));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return resultSet;
 
+    }
+
+    public static ArrayList<Integer> getAdminRecordsFromDatabase() {
+        ArrayList<Integer> resultSet = new ArrayList<>();
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT userid FROM users WHERE available_role = 'ADMIN'");
+            while (rs.next()) {
+                Integer userId = rs.getInt("userid");
+                resultSet.add(userId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
+    public static void insertUserRecordsIntoDatabase(Integer userId) {
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            stmt.executeUpdate("INSERT INTO users (userid,available_role) VALUES ('" + userId + "', 'DEFAULT')");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteUserRecordFromDataBase(String userName) {
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            stmt.executeUpdate("delete from users where username = '" + userName + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void updateUserRecordsFromDatabase(String userName, Integer userId) {
+        try {
+            Statement stmt = DatabaseManager.getConnection().createStatement();
+            stmt.executeUpdate("update users set available_role = 'ADMIN' where userid = '" + userId + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

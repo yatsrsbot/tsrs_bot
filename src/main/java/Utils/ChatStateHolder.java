@@ -12,7 +12,7 @@ public class ChatStateHolder {
     private ChatStateHolder() {
     }
 
-    private class UserState {
+    public class UserState {
         Integer userId;
         ChatStateEnum chatState;
 
@@ -35,13 +35,23 @@ public class ChatStateHolder {
     public ChatStateEnum getChatState(long chatId) {
         return chatStates.get(chatId).chatState;
     }
-
     public void setChatState(Long chatId, ChatStateEnum state, Integer userId) {
         chatStates.put(chatId, new UserState(userId,state));
 
     }
     public Integer getUserId(Long chatId){
         return chatStates.get(chatId).userId;
+    }
+
+    public Long getChatId(Integer userId){
+        Long chatId = null;
+        for (Map.Entry<Long, UserState> chatEntry :chatStates.entrySet()){
+            if(chatEntry.getValue().userId.equals(userId)){
+                chatId = chatEntry.getKey();
+                break;
+            }
+        }
+        return chatId;
     }
 
 

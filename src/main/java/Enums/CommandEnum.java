@@ -9,8 +9,10 @@ public enum CommandEnum {
     AUCTION_EDIT("Изменить", new UpdateAuctionCommand()),
     AUCTION_DELETE("Удалить", new DeleteAuctionCommand()),
     AUCTION_ADD("Добавить", new AddAuctionCommand()),
-    EXIT("Выход", new ExitCommand());
-    //REQUEST_ACCESS("Запросить доступ",new DefaultCommand());
+    EXIT("Выход", new ExitCommand()),
+    REQUEST_ACCESS("Запросить доступ",new RequestAccessCommand()),
+    USERS("Записи пользователей", new UsersCommand());
+
 
     private final String name;
     private final ICommand command;

@@ -21,7 +21,6 @@ public class MessageHandler {
     public void handle(Update update) {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
-
             Message message = update.getMessage();
             Integer userId = message.getFrom().getId();
             long chatId = message.getChatId();
@@ -32,7 +31,8 @@ public class MessageHandler {
             if (userRole == Role.NONE) {
                 if (CommonsUtil.isCommand(messageText)) {
                     ICommand command = CommonsUtil.getCommand(messageText);
-                    command.execute(chatId, userRole, userId);
+                    String userName = message.getFrom().getUserName();
+                    command.execute(chatId, userRole, userId, userName);
                 }
             } else {
                 if (CommonsUtil.isCommand(messageText)) {
@@ -62,10 +62,51 @@ public class MessageHandler {
                         .equals(ChatStateEnum.AUCTION_ADD)) {
                     AddAuctionCommand addAuctionCommand = new AddAuctionCommand();
                     addAuctionCommand.execute(chatId, userRole, userId, messageText);
+                } else if (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStateEnum.USERS_GRANT_ROOT)) {
+                    GrantRootCommand grantRoot = new GrantRootCommand();
+                    grantRoot.execute(chatId, userRole, userId, messageText);
+                } else if (ChatStateHolder
+                        .getInstance()
+                        .getChatState(chatId)
+                        .equals(ChatStateEnum.USERS_DELETE)) {
+                    DeleteUserCommand deleteUserCommand = new DeleteUserCommand();
+                    deleteUserCommand.execute(chatId, userRole, userId, messageText);
                 }
 
             }
+        } else if (update.hasCallbackQuery()) {
+
+            String call_data = update.getCallbackQuery().getData();
+
+            String result = call_data.split(":")[0];
+            Integer acceptedUserId = Integer.parseInt(call_data.split(":")[1]);
+            Long acceptedUserChatId = ChatStateHolder.getInstance().getChatId(acceptedUserId);
+
+            int message_id = update.getCallbackQuery().getMessage().getMessageId();
+            long chat_id = update.getCallbackQuery().getMessage().getChatId();
+            String answer = "";
+            if (result.equals("ACCESS_GRANTED")) {
+                answer = "Доступ предоставлен";
+
+                DatabaseUtil.insertUserRecordsIntoDatabase(acceptedUserId);
+                UserHolder.getInstance().reloadUsersHolder();
+
+                Sender.getInstance().editMessageText(answer, chat_id, message_id);
+                Sender.getInstance().sendTextMessage("Доступ предоставлен", acceptedUserChatId);
+
+                Role acceptedUserRole = UserHolder.getInstance().getUserRole(acceptedUserId);
+
+                ChatStateHolder.getInstance().setChatState(acceptedUserChatId, ChatStateEnum.DEFAULT, acceptedUserId);
+                ICommand command = CommonsUtil.getCommand("/start");
+                command.execute(acceptedUserChatId, acceptedUserRole, acceptedUserId);
+            }
         }
+
     }
 }
+
+
 

@@ -8,4 +8,8 @@ public enum ChatStateEnum {
     AUCTION_VIEW,
     AUCTION_DELETE,
     AUCTION_ADD,
+    DEFAULT_ACCESS_REQUESTED,
+    USERS,
+    USERS_DELETE,
+    USERS_GRANT_ROOT
 }
