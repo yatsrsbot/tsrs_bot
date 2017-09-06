@@ -15,13 +15,26 @@ public class GrantRootCommand implements ICommand {
                         .sendMessageWithKeyboard("Введите имя пользователя", chatId, InlineKeyboards.getExitKeyboard());
             } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.USERS_GRANT_ROOT)) {
 
-                String userName = strings[0];
+                String accepteduserName = strings[0];
 
-                if (!UserHolder.getInstance().containsUserName(userName)) {
+
+
+                if (!UserHolder.getInstance().containsUserName(accepteduserName)) {
                     Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
                 } else {
-                    DatabaseUtil.updateUserRecordsFromDatabase(userName, userId);
+                    Integer acceptedUserId = UserHolder.getInstance().getUserIdbyName(accepteduserName);
+                    Long acceptedUserChatId = ChatStateHolder.getInstance().getChatId(acceptedUserId);
+
+
+                    DatabaseUtil.updateUserRecordsFromDatabase(accepteduserName, acceptedUserId);
+                    UserHolder.getInstance().reloadUsersHolder();
+                    Role acceptedUserRole = UserHolder.getInstance().getUserRole(acceptedUserId);
+
                     Sender.getInstance().sendTextMessage("Запись изменена", chatId);
+
+                    Sender.getInstance().sendTextMessage("Вам предоставлены права администратора", acceptedUserChatId);
+                    ICommand command = CommonsUtil.getCommand("/start");
+                    command.execute(acceptedUserChatId, acceptedUserRole, acceptedUserId);
                 }
             }
         }

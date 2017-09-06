@@ -29,7 +29,7 @@ public class UserHolder {
         return instance;
     }
 
-    Role getUserRole(Integer userId) {
+    public Role getUserRole(Integer userId) {
         Role role = Role.NONE;
         for (Map.Entry<Integer, UserData> user : users.entrySet()) {
             if (user.getKey().equals(userId)) {
@@ -40,6 +40,18 @@ public class UserHolder {
         return role;
     }
 
+    String getUserName(Integer userId) {
+        String userName = "";
+        for (Map.Entry<Integer, UserData> user : users.entrySet()) {
+            if (user.getKey().equals(userId)) {
+                userName = user.getValue().userName;
+            }
+
+        }
+        return userName;
+    }
+
+
     public void reloadUsersHolder() {
         users = DatabaseUtil.reloadUserRolesFromDatabase();
     }
@@ -47,11 +59,22 @@ public class UserHolder {
     public boolean containsUserName(String userName) {
         Boolean contains = false;
         for (Map.Entry<Integer, UserData> user : users.entrySet()) {
-            if (user.getValue().equals(userName)) {
-                contains =true;
+            if (user.getValue().userName.equals(userName)) {
+                contains = true;
             }
         }
         return contains;
     }
+
+    public Integer getUserIdbyName(String userName) {
+        Integer userId = null;
+        for (Map.Entry<Integer, UserData> user : users.entrySet()) {
+            if (user.getValue().userName.equals(userName)) {
+                userId = user.getKey();
+            }
+        }
+        return userId;
+    }
+
 
 }

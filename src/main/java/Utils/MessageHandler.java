@@ -83,7 +83,11 @@ public class MessageHandler {
 
             String result = call_data.split(":")[0];
             Integer acceptedUserId = Integer.parseInt(call_data.split(":")[1]);
+            String acceptedUserName = call_data.split(":")[2];
+
+
             Long acceptedUserChatId = ChatStateHolder.getInstance().getChatId(acceptedUserId);
+
 
             int message_id = update.getCallbackQuery().getMessage().getMessageId();
             long chat_id = update.getCallbackQuery().getMessage().getChatId();
@@ -91,7 +95,7 @@ public class MessageHandler {
             if (result.equals("ACCESS_GRANTED")) {
                 answer = "Доступ предоставлен";
 
-                DatabaseUtil.insertUserRecordsIntoDatabase(acceptedUserId);
+                DatabaseUtil.insertUserRecordsIntoDatabase(acceptedUserId,acceptedUserName);
                 UserHolder.getInstance().reloadUsersHolder();
 
                 Sender.getInstance().editMessageText(answer, chat_id, message_id);
@@ -101,7 +105,7 @@ public class MessageHandler {
 
                 ChatStateHolder.getInstance().setChatState(acceptedUserChatId, ChatStateEnum.DEFAULT, acceptedUserId);
                 ICommand command = CommonsUtil.getCommand("/start");
-                command.execute(acceptedUserChatId, acceptedUserRole, acceptedUserId);
+                command.execute(acceptedUserChatId, acceptedUserRole, acceptedUserId, acceptedUserName);
             }
         }
 

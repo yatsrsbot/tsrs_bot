@@ -89,12 +89,13 @@ public class InlineKeyboards {
         return createKeyboard(keyboardRows);
 
     }
-    public static InlineKeyboardMarkup getRequestAccessKeyBoard(Integer userId) {
+
+    public static InlineKeyboardMarkup getRequestAccessKeyBoard(Integer userId, String userName) {
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton().setText("Да").setCallbackData("ACCESS_GRANTED:"+userId));
+        rowInline.add(new InlineKeyboardButton().setText("Да").setCallbackData("ACCESS_GRANTED:" + userId + ":" + userName));
         // Set the keyboard to the markup
         rowsInline.add(rowInline);
         // Add it to the message
@@ -102,6 +103,7 @@ public class InlineKeyboards {
         return markupInline;
 
     }
+
     public static ReplyKeyboardMarkup getUsersKeyboard() {
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();

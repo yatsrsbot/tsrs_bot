@@ -61,7 +61,7 @@ public class DatabaseUtil {
             while (rs.next()) {
                 Integer userid = rs.getInt("userid");
                 Role available_role = Role.valueOf(rs.getString("available_role").toUpperCase());
-                String userName = rs.getString("userid");
+                String userName = rs.getString("username");
                 resultSet.put(userid, new UserHolder.UserData(available_role, userName));
             }
         } catch (SQLException e) {
@@ -86,10 +86,10 @@ public class DatabaseUtil {
         return resultSet;
     }
 
-    public static void insertUserRecordsIntoDatabase(Integer userId) {
+    public static void insertUserRecordsIntoDatabase(Integer userId, String userName) {
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();
-            stmt.executeUpdate("INSERT INTO users (userid,available_role) VALUES ('" + userId + "', 'DEFAULT')");
+            stmt.executeUpdate("INSERT INTO users (userid,available_role,username) VALUES ('" + userId + "', 'DEFAULT','" + userName + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -103,6 +103,7 @@ public class DatabaseUtil {
             e.printStackTrace();
         }
     }
+
     public static void updateUserRecordsFromDatabase(String userName, Integer userId) {
         try {
             Statement stmt = DatabaseManager.getConnection().createStatement();

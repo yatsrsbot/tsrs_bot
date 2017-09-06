@@ -18,7 +18,7 @@ public class RequestAccessCommand implements ICommand {
             for (Integer adminId : adminsId) {
                 Long adminChatId = ChatStateHolder.getInstance().getChatId(adminId);
                 if (!(adminChatId == null)) {
-                    Sender.getInstance().sendMessageWithInlineButtons("Пользователь @" +strings[0]+"\nЗапросил доступ\nАвторизовать?", adminChatId, InlineKeyboards.getRequestAccessKeyBoard(userId));
+                    Sender.getInstance().sendMessageWithInlineButtons("Пользователь @" +strings[0]+"\nЗапросил доступ\nАвторизовать?", adminChatId, InlineKeyboards.getRequestAccessKeyBoard(userId, strings[0]));
                 }
             }
             Sender.getInstance().sendTextMessage("Запрос отправлен", chatId);
