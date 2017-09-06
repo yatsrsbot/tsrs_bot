@@ -1,1 +1,1 @@
-worker: java -jar target/tsrs_bot-1.0-SNAPSHOT.jar
+worker: java -jar target/tsrs_bot-1.0-RELEASE.jar
