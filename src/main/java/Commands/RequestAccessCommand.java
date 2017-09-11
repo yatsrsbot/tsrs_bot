@@ -9,19 +9,29 @@ import Utils.Sender;
 
 import java.util.ArrayList;
 
-public class RequestAccessCommand implements ICommand {
+public class RequestAccessCommand extends AbstractCommand {
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
-        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.DEFAULT_UNREGISTERED)) {
-            ChatStateHolder.getInstance().setChatState(chatId,ChatStateEnum.DEFAULT_ACCESS_REQUESTED,userId);
+        if (stateHolder.getChatState(chatId).equals(ChatStateEnum.DEFAULT_UNREGISTERED)) {
+            stateHolder.setChatState(
+                    chatId,
+                    ChatStateEnum.DEFAULT_ACCESS_REQUESTED,
+                    userId);
+
             ArrayList<Integer> adminsId = DatabaseUtil.getAdminRecordsFromDatabase();
+
             for (Integer adminId : adminsId) {
-                Long adminChatId = ChatStateHolder.getInstance().getChatId(adminId);
+                Long adminChatId = stateHolder.getChatId(adminId);
                 if (!(adminChatId == null)) {
-                    Sender.getInstance().sendMessageWithInlineButtons("Пользователь @" +strings[0]+"\nЗапросил доступ\nАвторизовать?", adminChatId, InlineKeyboards.getRequestAccessKeyBoard(userId, strings[0]));
+                    sender.sendMessageWithInlineButtons(
+                            "Пользователь @" +strings[0]+"\nЗапросил доступ\nАвторизовать?",
+                            adminChatId,
+                            InlineKeyboards.getRequestAccessKeyBoard(
+                                    userId,
+                                    strings[0]));
                 }
             }
-            Sender.getInstance().sendTextMessage("Запрос отправлен", chatId);
+            sender.sendTextMessage("Запрос отправлен", chatId);
         }
     }
 }

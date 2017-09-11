@@ -6,12 +6,15 @@ import Utils.ChatStateHolder;
 import Utils.InlineKeyboards;
 import Utils.Sender;
 
-public class ExitCommand implements ICommand {
+public class ExitCommand extends AbstractCommand {
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
-        Sender
-                .getInstance()
-                .sendMessageWithKeyboard("Привет!",chatId, InlineKeyboards.getDefaultKeyboard(role));
-        ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.DEFAULT,userId);
+
+        sender.sendMessageWithKeyboard("Привет!",
+                chatId,
+                InlineKeyboards.getDefaultKeyboard(role));
+
+        stateHolder.setChatState(chatId,
+                ChatStateEnum.DEFAULT, userId);
     }
 }

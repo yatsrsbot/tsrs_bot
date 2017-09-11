@@ -7,17 +7,21 @@ import Utils.DatabaseUtil;
 import Utils.InlineKeyboards;
 import Utils.Sender;
 
-public class DeleteAuctionCommand implements ICommand {
-
-    private ChatStateHolder stateHolder = ChatStateHolder.getInstance();
-    private Sender sender = Sender.getInstance();
+public class DeleteAuctionCommand extends AbstractCommand {
 
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
         if (Role.ADMIN.equals(role)) {
             if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
-                stateHolder.setChatState(chatId, ChatStateEnum.AUCTION_DELETE, userId);
-                sender.sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
+                stateHolder.setChatState(
+                        chatId,
+                        ChatStateEnum.AUCTION_DELETE,
+                        userId);
+
+                sender.sendMessageWithKeyboard(
+                        "Введите название аукциона",
+                        chatId,
+                        InlineKeyboards.getExitKeyboard());
             } else if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION_DELETE)) {
 
                 if (DatabaseUtil.getAuctionRecordsFromDatabase().containsKey(strings[0])) {

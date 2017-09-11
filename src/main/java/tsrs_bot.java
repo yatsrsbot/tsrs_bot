@@ -7,14 +7,10 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
 
     private MessageHandler messageHandler;
-    private String botToken = "449828975:AAFFC60Q31Z2Ip5wWyuLZwrMhW5SY7EwoBs";
+    private String botToken = "";
     public tsrs_bot(){
         UserHolder.getInstance().reloadUsersHolder();
     }
-
-
-
-
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -23,7 +19,6 @@ public class tsrs_bot extends TelegramLongPollingBot {
 
         MessageHandler.getInstance().handle(update);
     }
-
 
     @Override
     public String getBotUsername() {

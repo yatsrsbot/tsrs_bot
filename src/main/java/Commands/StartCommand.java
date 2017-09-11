@@ -7,17 +7,21 @@ import Utils.ChatStateHolder;
 import Utils.InlineKeyboards;
 import Utils.Sender;
 
-public class StartCommand implements ICommand {
+public class StartCommand extends AbstractCommand {
 
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
 
         if (Role.NONE.equals(role)){
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.DEFAULT_UNREGISTERED,userId);
+            stateHolder.setChatState(
+                    chatId,
+                    ChatStateEnum.DEFAULT_UNREGISTERED,
+                    userId);
         }
-        else {ChatStateHolder.getInstance().setChatState(chatId,ChatStateEnum.DEFAULT,userId);}
-        Sender
-                .getInstance()
-                .sendMessageWithKeyboard("Привет!",chatId, InlineKeyboards.getDefaultKeyboard(role));
+        else {stateHolder.setChatState(chatId,ChatStateEnum.DEFAULT,userId);}
+        sender.sendMessageWithKeyboard(
+                "Привет!",
+                chatId,
+                InlineKeyboards.getDefaultKeyboard(role));
     }
 }

@@ -7,16 +7,21 @@ import Utils.DatabaseUtil;
 import Utils.InlineKeyboards;
 import Utils.Sender;
 
-public class UpdateAuctionCommand implements ICommand {
+public class UpdateAuctionCommand extends AbstractCommand {
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
         if (Role.ADMIN.equals(role)) {
-            if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
-                ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.AUCTION_UPDATE, userId);
-                Sender
-                        .getInstance()
-                        .sendMessageWithKeyboard("Введите название аукциона и значение в виде Аукицон/Значение", chatId, InlineKeyboards.getExitKeyboard());
-            } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION_UPDATE)) {
+            if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
+                stateHolder.setChatState(
+                        chatId,
+                        ChatStateEnum.AUCTION_UPDATE,
+                        userId);
+
+                sender.sendMessageWithKeyboard(
+                        "Введите название аукциона и значение в виде Аукицон/Значение",
+                        chatId,
+                        InlineKeyboards.getExitKeyboard());
+            } else if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION_UPDATE)) {
                 String auctionName;
                 Integer value;
                 try {
@@ -24,13 +29,13 @@ public class UpdateAuctionCommand implements ICommand {
                     auctionName = data[0];
                     value = Integer.parseInt(data[1]);
                     if (!DatabaseUtil.getAuctionRecordsFromDatabase().containsKey(auctionName)) {
-                        Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
+                        sender.sendTextMessage("Нет такой записи", chatId);
                     } else {
                         DatabaseUtil.updateAuctionRecordsFromDatabase(auctionName, value);
-                        Sender.getInstance().sendTextMessage("Запись изменена", chatId);
+                        sender.sendTextMessage("Запись изменена", chatId);
                     }
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    Sender.getInstance().sendTextMessage("Неверный формат", chatId);
+                    sender.sendTextMessage("Неверный формат", chatId);
                 }
 
             }

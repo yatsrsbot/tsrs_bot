@@ -4,18 +4,22 @@ import Enums.ChatStateEnum;
 import Enums.Role;
 import Utils.*;
 
-public class ViewAuctionCommand implements ICommand {
+public class ViewAuctionCommand extends AbstractCommand {
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... auctionName) {
-        if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.AUCTION_VIEW,userId);
-            Sender.getInstance().sendMessageWithKeyboard("Введите название аукциона", chatId, InlineKeyboards.getExitKeyboard());
-        } else if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.AUCTION_VIEW)) {
+        if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION)) {
+            stateHolder.setChatState(chatId, ChatStateEnum.AUCTION_VIEW, userId);
+
+            sender.sendMessageWithKeyboard(
+                    "Введите название аукциона",
+                    chatId,
+                    InlineKeyboards.getExitKeyboard());
+        } else if (stateHolder.getChatState(chatId).equals(ChatStateEnum.AUCTION_VIEW)) {
             if (DatabaseUtil.getAuctionRecordsFromDatabase().containsKey(auctionName[0])) {
                 String responseMessage = DatabaseUtil.getAuctionRecordsFromDatabase().get(auctionName[0]).toString();
-                Sender.getInstance().sendTextMessage(responseMessage, chatId);
+                sender.sendTextMessage(responseMessage, chatId);
             } else {
-                Sender.getInstance().sendTextMessage("Нет такой записи", chatId);
+                sender.sendTextMessage("Нет такой записи", chatId);
             }
         }
     }

@@ -7,14 +7,19 @@ import Utils.InlineKeyboards;
 import Utils.Sender;
 
 
-public class AuctionCommand implements ICommand {
+public class AuctionCommand extends AbstractCommand {
     @Override
     public void execute(Long chatId, Role role, Integer userId, String... strings) {
         if (ChatStateHolder.getInstance().getChatState(chatId).equals(ChatStateEnum.DEFAULT)) {
-            Sender
-                    .getInstance()
-                    .sendMessageWithKeyboard("Выберите действие", chatId, InlineKeyboards.getAcutionKeyboard(role));
-            ChatStateHolder.getInstance().setChatState(chatId, ChatStateEnum.AUCTION, userId);
+
+            sender.sendMessageWithKeyboard(
+                    "Выберите действие",
+                    chatId,
+                    InlineKeyboards.getAcutionKeyboard(role));
+
+            stateHolder.setChatState(chatId,
+                    ChatStateEnum.AUCTION,
+                    userId);
         }
     }
 }
