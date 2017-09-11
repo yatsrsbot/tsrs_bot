@@ -23,7 +23,7 @@ public class RequestAccessCommand extends AbstractCommand {
             for (Integer adminId : adminsId) {
                 Long adminChatId = stateHolder.getChatId(adminId);
                 if (!(adminChatId == null)) {
-                    sender.sendMessageWithInlineButtons(
+                    sender.sendMessageWithKeyboard(
                             "Пользователь @" +strings[0]+"\nЗапросил доступ\nАвторизовать?",
                             adminChatId,
                             InlineKeyboards.getRequestAccessKeyBoard(

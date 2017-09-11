@@ -5,9 +5,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 public class tsrs_bot extends TelegramLongPollingBot {
 
-
     private MessageHandler messageHandler;
     private String botToken = "";
+
     public tsrs_bot(){
         UserHolder.getInstance().reloadUsersHolder();
     }
